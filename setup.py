@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from distutils.core import setup
 
+from distutils.core import setup
 
 setup(
     name='django-flatpages-i18n',
@@ -11,12 +11,14 @@ setup(
     author_email='info@pragmaticmates.com',
     maintainer='Pragmatic Mates',
     maintainer_email='info@pragmaticmates.com',
-    url='https://github.com/deschler/django-modeltranslation',
-    packages=['modeltranslation', 'modeltranslation.management',
-              'modeltranslation.management.commands'],
-    package_data={'modeltranslation': ['static/modeltranslation/css/*.css',
-                                       'static/modeltranslation/js/*.js']},
-    requires=['django(>=1.3)'],
+    url='https://github.com/PragmaticMates/django-flatpages-i18n',
+    packages=['flatpages_i18n'],
+    package_data={},
+    requires=[
+        'South',
+        'django_modeltranslation',
+        'django(>=1.3)'
+    ],
     download_url='https://github.com/downloads/deschler/django-modeltranslation/django-modeltranslation-0.4.0-beta2.tar.gz',
     classifiers=[
         'Programming Language :: Python',
