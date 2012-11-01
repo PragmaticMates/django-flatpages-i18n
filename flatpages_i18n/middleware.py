@@ -7,7 +7,8 @@ from flatpages_i18n.views import flatpage
 class FlatpageFallbackMiddleware(object):
     def process_response(self, request, response):
         if response.status_code != 404:
-            return response # No need to check for a flatpage for non-404 responses.
+            # No need to check for a flatpage for non-404 responses.
+            return response
         try:
             return flatpage(request, request.path_info)
         # Return the original response if any errors happened. Because this

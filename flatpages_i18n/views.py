@@ -11,6 +11,7 @@ from flatpages_i18n.models import FlatPage_i18n
 
 DEFAULT_TEMPLATE = 'flatpages/default.html'
 
+
 # This view is called from FlatpageFallbackMiddleware.process_response
 # when a 404 is raised, which often means CsrfViewMiddleware.process_view
 # has not been called even if CsrfViewMiddleware is installed. So we need
@@ -46,17 +47,16 @@ def flatpage(request, url):
     }
 
     try:
-        f = get_object_or_404(FlatPage_i18n,
-            **kwargs)
+        f = get_object_or_404(FlatPage_i18n, **kwargs)
     except Http404:
         if not url.endswith('/') and settings.APPEND_SLASH:
             url += '/'
-            f = get_object_or_404(FlatPage_i18n,
-                **kwargs)
+            f = get_object_or_404(FlatPage_i18n, **kwargs)
             return HttpResponsePermanentRedirect('%s/' % request.path)
         else:
             raise
     return render_flatpage(request, f)
+
 
 @csrf_protect
 def render_flatpage(request, f):

@@ -5,8 +5,10 @@ from flatpages_i18n.models import FlatPage_i18n
 
 register = template.Library()
 
+
 class FlatpageNode(template.Node):
-    def __init__(self, context_name, starts_with=None, contains=None, excludes=None, user=None):
+    def __init__(self, context_name, starts_with=None, contains=None,
+                 excludes=None, user=None):
         self.context_name = context_name
         if starts_with:
             self.starts_with = template.Variable(starts_with)
@@ -88,10 +90,8 @@ def get_flatpages_i18n(parser, token):
         {% get_flatpages '/about/' as about_pages %}
         {% get_flatpages prefix as about_pages %}
         {% get_flatpages '/about/' for someuser as about_pages %}
-
-//pridana funkcionalita:
-	{% get_flatpages containing '/sk/' as my_pages %}
-	{% get_flatpages excluding '/sk/' as my_pages %}
+        {% get_flatpages containing '/sk/' as my_pages %}
+        {% get_flatpages excluding '/sk/' as my_pages %}
     """
     bits = token.split_contents()
     syntax_message = ("%(tag_name)s expects a syntax of %(tag_name)s "
@@ -113,7 +113,7 @@ def get_flatpages_i18n(parser, token):
         else:
             if bits[1] == "excluding":
                 excluding = bits[2]
-	
+
         # The very last bit must be the context name
         if bits[-2] != 'as':
             raise template.TemplateSyntaxError(syntax_message)
@@ -121,12 +121,14 @@ def get_flatpages_i18n(parser, token):
 
         # If there are 5 or 6 bits, there is a user defined
         user = None
-        if len(bits) >= 5:
+#        if len(bits) >= 5:
             #if bits[-4] != 'for':
                 #raise template.TemplateSyntaxError(syntax_message)
-	    if bits[-4] == 'for':
-                user = bits[-3]
+        if bits[-4] == 'for':
+            user = bits[-3]
 
-        return FlatpageNode(context_name, starts_with=prefix, contains=containing, excludes=excluding, user=user)
+        return FlatpageNode(
+            context_name, starts_with=prefix, contains=containing,
+            excludes=excluding, user=user)
     else:
         raise template.TemplateSyntaxError(syntax_message)
