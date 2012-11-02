@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_protect
 from flatpages_i18n.models import FlatPage_i18n
 
 
-DEFAULT_TEMPLATE = 'flatpages/default.html'
+DEFAULT_TEMPLATE = 'flatpages_i18n/default.html'
 
 
 # This view is called from FlatpageFallbackMiddleware.process_response
@@ -55,6 +55,7 @@ def flatpage(request, url):
             return HttpResponsePermanentRedirect('%s/' % request.path)
         else:
             raise
+
     return render_flatpage(request, f)
 
 
