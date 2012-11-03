@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='django-flatpages-i18n',
@@ -11,7 +11,7 @@ setup(
     maintainer='Pragmatic Mates',
     maintainer_email='info@pragmaticmates.com',
     url='https://github.com/PragmaticMates/django-flatpages-i18n',
-    packages=['flatpages_i18n'],
+    packages=find_packages(),
     install_requires=('South', 'django_modeltranslation', 'django'),
     classifiers=[
         'Programming Language :: Python',
