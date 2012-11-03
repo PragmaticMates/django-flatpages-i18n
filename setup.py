@@ -11,7 +11,10 @@ setup(
     maintainer='Pragmatic Mates',
     maintainer_email='info@pragmaticmates.com',
     url='https://github.com/PragmaticMates/django-flatpages-i18n',
-    packages=find_packages(),
+    packages=[
+        'flatpages_i18n',
+        'flatpages_i18n.templatetags'
+    ],
     include_package_data=True,
     install_requires=('South', 'django_modeltranslation', 'django'),
     classifiers=[

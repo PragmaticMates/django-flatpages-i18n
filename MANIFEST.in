@@ -1,0 +1,2 @@
+include README.md
+recursive-include flatpages_i18n/templates *
