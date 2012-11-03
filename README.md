@@ -61,3 +61,26 @@ Run the migrations.
 $ python manage.py schemamigration flatpages_i18n --init
 $ python manage.py migrate flatpages_i18n
 ```
+
+{% load i18n flatpages %}
+
+{% get_available_languages as LANGUAGES %}
+{% get_flatpages_i18n as flatpages_i18n %}
+
+Usage
+------
+
+templates/home.html
+
+```
+{% load i18n flatpages %}
+
+{% get_available_languages as LANGUAGES %}
+{% get_flatpages_i18n as flatpages_i18n %}
+
+<ul>
+    {% for flatpage in flatpages_i18n %}
+        <li><a href="/{{ LANGUAGE_CODE }}{{ flatpage.url }}">{{ flatpage.title }}</a></li>
+    {% endfor %}
+</ul>
+```
