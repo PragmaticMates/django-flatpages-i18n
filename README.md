@@ -6,12 +6,14 @@ Translatable version of django.contrib.flatpages
 Installation
 -------------
 
+```
 $ pip install django-flatpages-i18n
+```
 
 Installation
 -------------
 
-Add new applications at the end of INSTALLED_APPS in your settings.py. After the update your INSTALLED_APPS may looks something like this:
+Add new applications at the end of INSTALLED_APPS in your settings.py.
 
 ```python
 INSTALLED_APPS = (
@@ -42,6 +44,7 @@ LANGUAGES = (
     ('en', gettext('English')),
 )
 ```
+Don't forget to add an FlatpageFallbackMiddleware into MIDDLEWARE_CLASSES.
 
 ```python
 MIDDLEWARE_CLASSES = (
@@ -55,5 +58,9 @@ MIDDLEWARE_CLASSES = (
 )
 ```
 
+Run the migrations.
+
+```
 $ python manage.py schemamigration flatpages_i18n --init
 $ python manage.py migrate flatpages_i18n
+```
