@@ -85,13 +85,13 @@ def get_flatpages_i18n(parser, token):
 
     Example usage::
 
-        {% get_flatpages as flatpages %}
-        {% get_flatpages for someuser as flatpages %}
-        {% get_flatpages '/about/' as about_pages %}
-        {% get_flatpages prefix as about_pages %}
-        {% get_flatpages '/about/' for someuser as about_pages %}
-        {% get_flatpages containing '/sk/' as my_pages %}
-        {% get_flatpages excluding '/sk/' as my_pages %}
+        {% get_flatpages_i18n as flatpages %}
+        {% get_flatpages_i18n for someuser as flatpages %}
+        {% get_flatpages_i18n '/about/' as about_pages %}
+        {% get_flatpages_i18n prefix as about_pages %}
+        {% get_flatpages_i18n '/about/' for someuser as about_pages %}
+        {% get_flatpages_i18n containing '/en/' as my_pages %}
+        {% get_flatpages_i18n excluding '/en/' as my_pages %}
     """
     bits = token.split_contents()
     syntax_message = ("%(tag_name)s expects a syntax of %(tag_name)s "
