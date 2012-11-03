@@ -27,4 +27,4 @@ setup(
         'Intended Audience :: Developers',
         'Framework :: Django',
         'License :: OSI Approved :: BSD License'],
-    license='New BSD')
+    license='BSD License')
