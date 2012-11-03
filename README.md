@@ -10,9 +10,6 @@ Installation
 $ pip install django-flatpages-i18n
 ```
 
-Installation
--------------
-
 Add new applications at the end of INSTALLED_APPS in your settings.py.
 
 ```python
