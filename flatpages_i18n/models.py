@@ -29,7 +29,6 @@ class FlatPage_i18n(models.Model):
         return self.url
 
     class Meta:
-        db_table = 'giaroo_flatpages'
         verbose_name = _(u'flat page')
         verbose_name_plural = _(u'flat pages')
         ordering = ('url', )
