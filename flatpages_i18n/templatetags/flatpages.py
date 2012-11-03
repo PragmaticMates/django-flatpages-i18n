@@ -3,6 +3,7 @@ from django.conf import settings
 
 from flatpages_i18n.models import FlatPage_i18n
 
+
 register = template.Library()
 
 
@@ -120,12 +121,12 @@ def get_flatpages_i18n(parser, token):
         context_name = bits[-1]
 
         # If there are 5 or 6 bits, there is a user defined
-        user = None
-#        if len(bits) >= 5:
-            #if bits[-4] != 'for':
-                #raise template.TemplateSyntaxError(syntax_message)
-        if bits[-4] == 'for':
+        if len(bits) >= 5:
+            if bits[-4] != 'for':
+                raise template.TemplateSyntaxError(syntax_message)
             user = bits[-3]
+        else:
+            user = None
 
         return FlatpageNode(
             context_name, starts_with=prefix, contains=containing,
