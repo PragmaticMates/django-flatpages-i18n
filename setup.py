@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='django-flatpages-i18n',
-    version='0.1.2',
+    version='0.1.3',
     description='Translatable flatpages',
     author='Pragmatic Mates',
     author_email='info@pragmaticmates.com',
@@ -16,7 +16,7 @@ setup(
         'flatpages_i18n.templatetags'
     ],
     include_package_data=True,
-    install_requires=('South', 'django_modeltranslation', 'django'),
+    install_requires=('South', 'django_modeltranslation', 'django', 'django_mptt'),
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.5',

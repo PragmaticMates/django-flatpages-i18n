@@ -2,7 +2,6 @@
 
 from django import template
 from django.conf import settings
-
 from flatpages_i18n.models import FlatPage_i18n
 
 
@@ -135,3 +134,18 @@ def get_flatpages_i18n(parser, token):
             excludes=excluding, user=user)
     else:
         raise template.TemplateSyntaxError(syntax_message)
+
+
+@register.inclusion_tag('flatpages_i18n/menu.html', takes_context=True)
+def get_menu(context, pk=None):
+    from flatpages_i18n.models import MenuItem
+
+    if pk is not None:
+        obj = MenuItem.objects.get(pk=pk)
+        return {
+            'nodes': obj.get_descendants()
+        }
+
+    return {
+        'nodes': MenuItem.objects.all()
+    }

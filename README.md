@@ -84,3 +84,19 @@ templates/home.html
     {% endfor %}
 </ul>
 ```
+
+or by using simple menu system
+
+```
+<div id="navigation">
+    {% get_menu %}
+</div>
+```
+
+get only children of menu item identified by ID
+
+```
+<div id="navigation">
+    {% get_menu 2 %}
+</div>    
+```
