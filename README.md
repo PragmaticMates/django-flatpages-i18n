@@ -1,7 +1,7 @@
 django-flatpages-i18n
 =====================
 
-Translatable version of django.contrib.flatpages
+Translatable version of django.contrib.flatpages with basic menu support.
 
 Installation
 -------------
