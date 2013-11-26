@@ -24,6 +24,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     'south',
+    
+    'mptt',
     'modeltranslation',
     'flatpages_i18n',
 )
