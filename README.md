@@ -39,8 +39,8 @@ LANGUAGE_CODE = 'en'
 from django.utils.translation import gettext
 
 LANGUAGES = (
-    ('de', gettext('German')),
     ('en', gettext('English')),
+    ('de', gettext('German')),
 )
 ```
 
@@ -62,13 +62,12 @@ MIDDLEWARE_CLASSES = (
 Run the migrations.
 
 ```
-$ python manage.py schemamigration flatpages_i18n --init
 $ python manage.py migrate flatpages_i18n
 ```
 
 
 Usage
-------
+-----
 
 templates/home.html
 
@@ -93,10 +92,18 @@ or by using simple menu system
 </div>
 ```
 
-get only children of menu item identified by its ID
+get only children of menu item identified by its PK
 
 ```
 <div id="navigation">
     {% get_menu 2 %}
 </div>    
+```
+
+or by its machine_name
+
+```
+<div id="navigation">
+    {% get_menu 'footer-menu' %}
+</div>
 ```

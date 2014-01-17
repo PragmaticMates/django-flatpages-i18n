@@ -1,0 +1,22 @@
+{% load i18n mptt_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<ul class="nav">
+    {% recursetree nodes %}
+        <li {% if not node.is_leaf_node %}class="dropdown"{% endif %}>
+            <a href="{% if not node.has_custom_link %}/{{ LANGUAGE_CODE }}{% endif %}{{ node.get_link }}" {% if not node.is_leaf_node %}class="dropdown-toggle" data-toggle="dropdown"{% endif %}>
+                {{ node }}
+
+                {% if not node.is_leaf_node %}
+                    <b class="caret"></b>
+                {% endif %}
+            </a>
+
+            {% if not node.is_leaf_node %}
+                <ul class="dropdown-menu">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul>

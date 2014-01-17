@@ -10,7 +10,6 @@ from models import FlatPage_i18n, MenuItem
 
 class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
     form = FlatpageForm
-    #add_form = UserCreationForm
     mptt_level_indent = 0
 
     fieldsets = (
@@ -32,7 +31,7 @@ class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
             return obj
 
         level_indicator = ''.join(['-' for i in range(level)])
-        return '%s %s' % (level_indicator, obj.title)
+        return '%s %s' % (level_indicator, unicode(obj))
 
 admin.site.register(FlatPage_i18n, FlatPageAdmin)
 
@@ -40,8 +39,8 @@ admin.site.register(FlatPage_i18n, FlatPageAdmin)
 class MenuItemAdmin(MPTTModelAdmin, TranslationAdmin):
     mptt_level_indent = 0
 
-    fields = ['parent', 'title', 'flatpage', 'has_custom_link', 'custom_link']
-    list_display = ('indented_title', 'parent', 'weight')
+    fields = ['parent', 'title', 'flatpage', 'machine_name', 'has_custom_link', 'custom_link', ]
+    list_display = ('indented_title', 'machine_name', 'parent', 'weight')
     list_editable = ['parent', 'weight']
 
     def indented_title(self, obj):
@@ -51,6 +50,6 @@ class MenuItemAdmin(MPTTModelAdmin, TranslationAdmin):
             return obj
 
         level_indicator = ''.join(['-' for i in range(level)])
-        return '%s %s' % (level_indicator, obj.title)
+        return '%s %s' % (level_indicator, unicode(obj))
 
 admin.site.register(MenuItem, MenuItemAdmin)

@@ -2,6 +2,8 @@
 
 from django import template
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import EMPTY_VALUES
 
 from ..models import FlatPage_i18n
 
@@ -138,15 +140,20 @@ def get_flatpages_i18n(parser, token):
 
 
 @register.inclusion_tag('flatpages_i18n/menu.html', takes_context=True)
-def get_menu(context, pk=None):
+def get_menu(context, key=None):
     from ..models import MenuItem
 
-    if pk is not None:
-        obj = MenuItem.objects.get(pk=pk)
-        return {
-            'nodes': obj.get_descendants()
-        }
+    menu = MenuItem.objects.all()
+
+    if key not in EMPTY_VALUES:
+        try:
+            if unicode(key).isdigit():
+                menu = MenuItem.objects.get(pk=key).get_descendants()
+            else:
+                menu = MenuItem.objects.get(machine_name=key).get_descendants()
+        except ObjectDoesNotExist:
+            menu = MenuItem.objects.none()
 
     return {
-        'nodes': MenuItem.objects.all()
+        'nodes': menu
     }

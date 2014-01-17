@@ -51,12 +51,16 @@ class FlatPage_i18n(MPTTModel):
 class MenuItem(MPTTModel):
     WEIGHT = [(i, i) for i in range(-10, 10)]
 
-    parent = TreeForeignKey(
-        'self', null=True, blank=True, related_name='children')
-    flatpage = models.ForeignKey(FlatPage_i18n, verbose_name=_('flatpage'), null=True, blank=True, default=None)
+    machine_name = models.CharField(_(u'machine name'), max_length=255,
+        null=True, blank=True, default=None)
+    parent = TreeForeignKey('self', related_name='children',
+        null=True, blank=True)
+    flatpage = models.ForeignKey(FlatPage_i18n, verbose_name=_('flatpage'),
+        null=True, blank=True, default=None)
     custom_link = models.CharField(_(u'custom link'), max_length=255, null=True, blank=True, default=None)
     has_custom_link = models.BooleanField(_(u'has custom link'), default=False)
-    title = models.CharField(_(u'title'), max_length=255)
+    title = models.CharField(_(u'title'), max_length=255,
+        blank=True, null=True, default=None)
     weight = models.IntegerField(
         _(u'weight'), null=True, blank=True, default=0, choices=WEIGHT)
     created = models.DateTimeField(_(u'created'), default=now)
@@ -71,14 +75,17 @@ class MenuItem(MPTTModel):
         ordering = ('weight', 'created')
 
     def __unicode__(self):
-        return self.title
+        if self.title and len(unicode(self.title).strip()) != 0:
+            return self.title
+
+        if self.flatpage:
+            return unicode(self.flatpage)
+
+        return unicode(self.pk)
 
     def save(self, **kwargs):
         self.modified = now()
         super(MenuItem, self).save(**kwargs)
-
-    def get_absolute_url(self):
-        return self.url
 
     def get_link(self):
         if self.flatpage:
