@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 
 from flatpages_i18n.models import FlatPage_i18n
@@ -8,30 +9,52 @@ from flatpages_i18n.models import FlatPage_i18n
 class FlatpageForm(forms.ModelForm):
     REQUIRED_MIDDLEWARE = 'django.middleware.common.CommonMiddleware'
 
-    url = forms.RegexField(
-        label=_(u'URL'), max_length=100, regex=r'^[-\w/\.~]+$',
-        help_text=_(u"Example: '/about/contact/'. Make sure to have leading \
-                    and trailing slashes."),
-        error_message=_(u"This value must contain only letters, numbers, \
-                          dots, underscores, dashes, slashes or tildes."))
+    def clean_url_value(self, url_key):
+        url = self.cleaned_data.get(url_key, None)
 
-    def clean_url(self):
-        url = self.cleaned_data['url']
+        if url in EMPTY_VALUES:
+            return
 
+        # check leading slash
         if not url.startswith('/'):
-            raise forms.ValidationError(_(u'URL is missing a leading slash.'))
+            raise forms.ValidationError(_(u"URL '%(url)s' is missing a leading slash.") % {'url': url})
 
+        # check trailing slash
         if settings.APPEND_SLASH and \
             self.REQUIRED_MIDDLEWARE in settings.MIDDLEWARE_CLASSES and \
                 not url.endswith('/'):
-            raise forms.ValidationError(_(u'URL is missing a trailing slash.'))
+            raise forms.ValidationError(_(u"URL '%(url)s' is missing a trailing slash.") % {'url': url})
 
+        # check URL uniqueness
+        sites = self.cleaned_data.get('sites', None)
+
+        kwargs = {
+            '{0}__{1}'.format(url_key, 'exact'): url,
+        }
+        same_url = FlatPage_i18n.objects.filter(**kwargs)
+
+        if self.instance.pk:
+            same_url = same_url.exclude(pk=self.instance.pk)
+
+        if sites is None:
+            raise forms.ValidationError(_(u'No sites selected!'))
+
+        if same_url.filter(sites__in=sites).exists():
+            for site in sites:
+                if same_url.filter(sites=site).exists():
+                    raise forms.ValidationError(_(u"Flatpage with URL '%(url)s' already exists \
+                                                  for site %(site)s.") % {'url': url, 'site': site})
         return url
 
     def clean(self):
+        for language in dict(settings.LANGUAGES).keys():
+            url_key = 'url_%s' % language
+            self.clean_url_value(url_key)
+
         url = self.cleaned_data.get('url', None)
         sites = self.cleaned_data.get('sites', None)
         same_url = FlatPage_i18n.objects.filter(url=url)
+
 
         if self.instance.pk:
             same_url = same_url.exclude(pk=self.instance.pk)

@@ -1,12 +1,16 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from modeltranslation.admin import TranslationAdmin
 
-from flatpages_i18n.models import FlatPage_i18n, MenuItem
+from modeltranslation.admin import TranslationAdmin
 from mptt.admin import MPTTModelAdmin
+
+from forms import FlatpageForm
+from models import FlatPage_i18n, MenuItem
 
 
 class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
+    form = FlatpageForm
+    #add_form = UserCreationForm
     mptt_level_indent = 0
 
     fieldsets = (
@@ -22,7 +26,7 @@ class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
     search_fields = ('url', 'title')
 
     def indented_title(self, obj):
-        level =  getattr(obj, obj._mptt_meta.level_attr)
+        level = getattr(obj, obj._mptt_meta.level_attr)
 
         if level is 0:
             return obj
@@ -41,7 +45,7 @@ class MenuItemAdmin(MPTTModelAdmin, TranslationAdmin):
     list_editable = ['parent', 'weight']
 
     def indented_title(self, obj):
-        level =  getattr(obj, obj._mptt_meta.level_attr)
+        level = getattr(obj, obj._mptt_meta.level_attr)
 
         if level is 0:
             return obj

@@ -43,7 +43,8 @@ LANGUAGES = (
     ('en', gettext('English')),
 )
 ```
-Don't forget to add an FlatpageFallbackMiddleware into MIDDLEWARE_CLASSES.
+
+Add the FlatpageFallbackMiddleware at the end of MIDDLEWARE_CLASSES.
 
 ```python
 MIDDLEWARE_CLASSES = (
@@ -53,7 +54,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'flatpages_i18n.middleware.FlatpageFallbackMiddleware'
+
+    'flatpages_i18n.middleware.FlatpageFallbackMiddleware' # Add this
 )
 ```
 
@@ -64,10 +66,6 @@ $ python manage.py schemamigration flatpages_i18n --init
 $ python manage.py migrate flatpages_i18n
 ```
 
-{% load i18n flatpages %}
-
-{% get_available_languages as LANGUAGES %}
-{% get_flatpages_i18n as flatpages_i18n %}
 
 Usage
 ------
@@ -75,7 +73,7 @@ Usage
 templates/home.html
 
 ```
-{% load i18n flatpages %}
+{% load i18n flatpages_i18n %}
 
 {% get_available_languages as LANGUAGES %}
 {% get_flatpages_i18n as flatpages_i18n %}
@@ -95,7 +93,7 @@ or by using simple menu system
 </div>
 ```
 
-get only children of menu item identified by ID
+get only children of menu item identified by its ID
 
 ```
 <div id="navigation">

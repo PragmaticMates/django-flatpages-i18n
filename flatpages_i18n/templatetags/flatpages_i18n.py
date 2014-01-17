@@ -2,7 +2,8 @@
 
 from django import template
 from django.conf import settings
-from flatpages_i18n.models import FlatPage_i18n
+
+from ..models import FlatPage_i18n
 
 
 register = template.Library()
@@ -47,7 +48,7 @@ class FlatpageNode(template.Node):
             flatpages = flatpages.filter(
                 url__contains=self.contains.resolve(context))
 
-    # If a string to exclude was specified, add a filter
+        # If a string to exclude was specified, add a filter
         if self.excludes:
             flatpages = flatpages.exclude(
                 url__contains=self.excludes.resolve(context))
@@ -83,7 +84,7 @@ def get_flatpages_i18n(parser, token):
 
     Syntax::
 
-        {% get_flatpages ['url_starts_with'] [for user] as context_name %}
+        {% get_flatpages_i18n ['url_starts_with'] [for user] as context_name %}
 
     Example usage::
 
@@ -101,7 +102,7 @@ def get_flatpages_i18n(parser, token):
                       dict(tag_name=bits[0]))
 
     # Must have at 3-6 bits in the tag
-    if len(bits) >= 3 and len(bits) <= 8:
+    if 3 <= len(bits) <= 8:
         containing = None
         excluding = None
 
@@ -138,7 +139,7 @@ def get_flatpages_i18n(parser, token):
 
 @register.inclusion_tag('flatpages_i18n/menu.html', takes_context=True)
 def get_menu(context, pk=None):
-    from flatpages_i18n.models import MenuItem
+    from ..models import MenuItem
 
     if pk is not None:
         obj = MenuItem.objects.get(pk=pk)

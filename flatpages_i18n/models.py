@@ -12,13 +12,14 @@ class FlatPage_i18n(MPTTModel):
     parent = TreeForeignKey(
         'self', null=True, blank=True, related_name='children')
     sites = models.ManyToManyField(Site)
-    url = models.CharField(_(u'URL'), max_length=100, db_index=True)
+    url = models.CharField(_(u'URL'), max_length=100, db_index=True,
+        help_text=_(u"Example: '/about/contact/'. Make sure to have leading and trailing slashes."))
     title = models.CharField(_(u'title'), max_length=200)
     content = models.TextField(_(u'content'), blank=True)
     template_name = models.CharField(
         _(u'template name'), max_length=70, blank=True,
-        help_text=_(u"Example: 'flatpages/contact_page.html'. If this isn't \
-        provided, the system will use 'flatpages/default.html'."))
+        help_text=_(u"Example: 'flatpages_i18n/contact_page.html'. If this isn't \
+        provided, the system will use 'flatpages_i18n/default.html'."))
     registration_required = models.BooleanField(
         _(u'registration required'),
         help_text=_(u"If this is checked, only logged-in users will be able \
