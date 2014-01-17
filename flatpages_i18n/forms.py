@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext_lazy as _
 
-from flatpages_i18n.models import FlatPage_i18n
+from flatpages_i18n.models import FlatPage_i18n, MenuItem
 
 
 class FlatpageForm(forms.ModelForm):
@@ -50,26 +50,30 @@ class FlatpageForm(forms.ModelForm):
         for language in dict(settings.LANGUAGES).keys():
             url_key = 'url_%s' % language
             self.clean_url_value(url_key)
-
-        url = self.cleaned_data.get('url', None)
-        sites = self.cleaned_data.get('sites', None)
-        same_url = FlatPage_i18n.objects.filter(url=url)
-
-
-        if self.instance.pk:
-            same_url = same_url.exclude(pk=self.instance.pk)
-
-        if sites is None:
-            raise forms.ValidationError(_(u'No sites selected!'))
-
-        if same_url.filter(sites__in=sites).exists():
-            for site in sites:
-                if same_url.filter(sites=site).exists():
-                    raise forms.ValidationError(
-                        _(u'Flatpage with url %(url)s already exists \
-                        for site %(site)s' % {'url': url, 'site': site}))
-
         return super(FlatpageForm, self).clean()
 
     class Meta:
         model = FlatPage_i18n
+
+
+
+class MenuItemForm(forms.ModelForm):
+    def clean_machine_name(self):
+        machine_name = self.cleaned_data.get('machine_name', None)
+
+        if machine_name in EMPTY_VALUES:
+            return machine_name
+
+        same_machine_name = MenuItem.objects.filter(machine_name=machine_name)
+
+        if self.instance.pk:
+            same_machine_name = same_machine_name.exclude(pk=self.instance.pk)
+
+        if same_machine_name.exists():
+            raise forms.ValidationError(
+                _(u'Menu item with machine name %(machine_name)s already exists!' % {'machine_name': machine_name }))
+
+        return machine_name
+
+    class Meta:
+        model = MenuItem

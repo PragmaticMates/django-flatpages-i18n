@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 from mptt.admin import MPTTModelAdmin
 
-from forms import FlatpageForm
+from forms import FlatpageForm, MenuItemForm
 from models import FlatPage_i18n, MenuItem
 
 
@@ -37,6 +37,7 @@ admin.site.register(FlatPage_i18n, FlatPageAdmin)
 
 
 class MenuItemAdmin(MPTTModelAdmin, TranslationAdmin):
+    form = MenuItemForm
     mptt_level_indent = 0
 
     fields = ['parent', 'title', 'flatpage', 'machine_name', 'has_custom_link', 'custom_link', ]
