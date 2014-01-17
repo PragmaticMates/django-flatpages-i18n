@@ -13,7 +13,7 @@ setup(
     url='https://github.com/PragmaticMates/django-flatpages-i18n',
     packages=[
         'flatpages_i18n',
-        'flatpages_i18n.templatetags'
+        'flatpages_i18n.templatetags',
         'flatpages_i18n.migrations'
     ],
     include_package_data=True,
