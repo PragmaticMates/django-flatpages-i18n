@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.xheaders import populate_xheaders
 from django.http import Http404, HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
 from django.template import loader, RequestContext
@@ -84,5 +83,9 @@ def render_flatpage(request, f):
         'flatpage': f,
     })
     response = HttpResponse(t.render(c))
-    populate_xheaders(request, response, FlatPage_i18n, f.id)
+    try:
+        from django.core.xheaders import populate_xheaders
+        populate_xheaders(request, response, FlatPage_i18n, f.id)
+    except ImportError:
+        pass
     return response
