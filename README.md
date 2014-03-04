@@ -69,8 +69,7 @@ $ python manage.py migrate flatpages_i18n
 Usage
 -----
 
-To get all flatpages:
-'''''''''''''''''''''
+###  To get all flatpages: ### 
 
 ```
 {% load i18n flatpages_i18n %}
@@ -94,8 +93,7 @@ or by its machine_name:
 
 {% get_flatpage_i18n 'my-flatpage' as my_flatpage %}
 
-Menu system:
-''''''''''''
+### Menu system: ###
 
 ```
 <div id="navigation">
