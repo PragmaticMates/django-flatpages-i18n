@@ -71,7 +71,7 @@ Usage
 
 ###  To get all flatpages:
 
-```
+```python
 {% load i18n flatpages_i18n %}
 
 {% get_available_languages as LANGUAGES %}
@@ -86,16 +86,20 @@ Usage
 
 To get flatpage by its PK:
 
+```python
 {% get_flatpage_i18n 123 as my_flatpage %}
 {{ my_flatpage.content }}
+```
 
 or by its machine_name:
 
+```python
 {% get_flatpage_i18n 'my-flatpage' as my_flatpage %}
+```
 
 ### Menu system:
 
-```
+```python
 <div id="navigation">
     {% get_menu %}
 </div>
@@ -103,7 +107,7 @@ or by its machine_name:
 
 get only children of menu item identified by its PK
 
-```
+```python
 <div id="navigation">
     {% get_menu 2 %}
 </div>
@@ -111,7 +115,7 @@ get only children of menu item identified by its PK
 
 or by its machine_name
 
-```
+```python
 <div id="navigation">
     {% get_menu 'footer-menu' %}
 </div>
