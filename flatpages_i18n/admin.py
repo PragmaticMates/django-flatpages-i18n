@@ -13,7 +13,7 @@ class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
     mptt_level_indent = 0
 
     fieldsets = (
-        (None, {'fields': ('parent', 'url', 'title', 'content', 'sites', )}),
+        (None, {'fields': ('parent', 'machine_name', 'url', 'title', 'content', 'sites', )}),
         (_(u'Advanced options'), {
             'classes': ('collapse',),
             'fields': ('registration_required', 'template_name')

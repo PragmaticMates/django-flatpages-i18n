@@ -24,7 +24,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     'south',
-    
+
     'mptt',
     'modeltranslation',
     'flatpages_i18n',
@@ -69,7 +69,8 @@ $ python manage.py migrate flatpages_i18n
 Usage
 -----
 
-templates/home.html
+To get all flatpages:
+'''''''''''''''''''''
 
 ```
 {% load i18n flatpages_i18n %}
@@ -84,7 +85,17 @@ templates/home.html
 </ul>
 ```
 
-or by using simple menu system
+To get flatpage by its PK:
+
+{% get_flatpage_i18n 123 as my_flatpage %}
+{{ my_flatpage.content }}
+
+or by its machine_name:
+
+{% get_flatpage_i18n 'my-flatpage' as my_flatpage %}
+
+Menu system:
+''''''''''''
 
 ```
 <div id="navigation">
@@ -97,7 +108,7 @@ get only children of menu item identified by its PK
 ```
 <div id="navigation">
     {% get_menu 2 %}
-</div>    
+</div>
 ```
 
 or by its machine_name

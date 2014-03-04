@@ -157,3 +157,19 @@ def get_menu(context, key=None):
     return {
         'nodes': menu
     }
+
+@register.assignment_tag(takes_context=True)
+def get_flatpage_i18n(context, key=None):
+    from ..models import FlatPage_i18n
+
+    if key not in EMPTY_VALUES:
+        try:
+            if unicode(key).isdigit():
+                flatpage = FlatPage_i18n.objects.get(pk=key)
+            else:
+                flatpage = FlatPage_i18n.objects.get(machine_name=key)
+        except ObjectDoesNotExist:
+            flatpage = None
+    else:
+        flatpage = None
+    return flatpage
