@@ -77,3 +77,11 @@ class MenuItemForm(forms.ModelForm):
 
     class Meta:
         model = MenuItem
+
+
+class ImageForm(forms.Form):
+    file = forms.ImageField()
+
+
+class FileForm(forms.Form):
+    file = forms.FileField()

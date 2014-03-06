@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.contrib import admin
+from django.db.models import TextField
 from django.utils.translation import ugettext_lazy as _
 
 from modeltranslation.admin import TranslationAdmin
@@ -6,6 +8,7 @@ from mptt.admin import MPTTModelAdmin
 
 from forms import FlatpageForm, MenuItemForm
 from models import FlatPage_i18n, MenuItem
+from widgets import RedactorEditor
 
 
 class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
@@ -23,6 +26,22 @@ class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
     list_filter = ('sites', 'registration_required')
     list_editable = ['parent', 'weight']
     search_fields = ('url', 'title')
+    readonly_fields = ('created', 'modified')
+
+    class Media:
+        js = ('js/flatpages_i18n/jquery.js', )
+        css = {
+            'all': ('css/flatpages_i18n/admin.css', )
+        }
+
+    def __init__(self, *args, **kwargs):
+        if getattr(settings, 'FLATPAGES_EDITOR', None) == 'REDACTOR':
+            self.formfield_overrides = {
+                TextField: {'widget': RedactorEditor},
+            }
+        super(TranslationAdmin, self).__init__(*args, **kwargs)
+        self._patch_list_editable()
+
 
     def indented_title(self, obj):
         level = getattr(obj, obj._mptt_meta.level_attr)

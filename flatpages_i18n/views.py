@@ -1,11 +1,17 @@
+import os
+
 from django.conf import settings
+from django.contrib.auth.decorators import user_passes_test
+from django.core.files.storage import default_storage
 from django.http import Http404, HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
 from django.template import loader, RequestContext
 from django.utils.safestring import mark_safe
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.views.decorators.http import require_POST
 
-from flatpages_i18n.models import FlatPage_i18n
+from forms import ImageForm
+from models import FlatPage_i18n
 
 
 DEFAULT_TEMPLATE = 'flatpages_i18n/default.html'
@@ -89,3 +95,21 @@ def render_flatpage(request, f):
     except ImportError:
         pass
     return response
+
+
+UPLOAD_PATH = getattr(settings, 'FLATPAGES_REDACTOR_UPLOAD', 'redactor/')
+
+
+@csrf_exempt
+@require_POST
+@user_passes_test(lambda u: u.is_staff)
+def redactor_upload(request, upload_to=None, form_class=ImageForm, response=lambda name, url: url):
+    form = form_class(request.POST, request.FILES)
+    if form.is_valid():
+        file_ = form.cleaned_data['file']
+        path = os.path.join(upload_to or UPLOAD_PATH, file_.name)
+        real_path = default_storage.save(path, file_)
+        return HttpResponse(
+            response(file_.name, os.path.join(settings.MEDIA_URL, real_path))
+        )
+    return HttpResponse(status=403)

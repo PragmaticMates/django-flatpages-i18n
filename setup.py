@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-
 from setuptools import setup
+
 
 setup(
     name='django-flatpages-i18n',
-    version='0.3.0',
+    version='0.4.0',
     description='Translatable flatpages',
+    long_description=open('README.rst').read(),
     author='Pragmatic Mates',
     author_email='info@pragmaticmates.com',
     maintainer='Pragmatic Mates',
@@ -28,4 +29,6 @@ setup(
         'Intended Audience :: Developers',
         'Framework :: Django',
         'License :: OSI Approved :: BSD License'],
-    license='BSD License')
+    license='BSD License',
+    keywords = "django flatpages translation i18n wysiwyg",
+)
