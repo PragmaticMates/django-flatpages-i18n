@@ -35,7 +35,9 @@ Installation
 
 5. Sync and migrate your database
 
-6. If you want to use Redactor WYSIWYG editor (see settings below), you need to add ``'flatpages_i18n.urls'`` to your urls.py::
+6. Run ``sync_translation_fields`` and ``update_translation_fields`` commands (from ``modeltranslation`` app)
+
+7. If you want to use Redactor WYSIWYG editor (see settings below), you need to add ``'flatpages_i18n.urls'`` to your urls.py::
 
     if 'flatpages_i18n' in settings.INSTALLED_APPS:
         urlpatterns += i18n_patterns('',
