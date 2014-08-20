@@ -19,7 +19,7 @@ Installation
 
 1. Install python library using pip: ``pip install django-flatpages-i18n``
 
-2. Add ``south``, ``mptt``, ``modeltranslation``, and ``flatpages_i18n`` to ``INSTALLED_APPS`` in your Django settings file
+2. Add ``south``, ``mptt``, ``modeltranslation`` and ``flatpages_i18n`` to ``INSTALLED_APPS`` in your Django settings file
 
 3. Add ``flatpages_i18n.middleware.FlatpageFallbackMiddleware`` to ``MIDDLEWARE_CLASSES`` in your Django settings file
 

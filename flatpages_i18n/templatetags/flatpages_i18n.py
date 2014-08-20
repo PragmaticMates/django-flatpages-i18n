@@ -158,6 +158,7 @@ def get_menu(context, key=None):
         'nodes': menu
     }
 
+
 @register.assignment_tag(takes_context=True)
 def get_flatpage_i18n(context, key=None):
     from ..models import FlatPage_i18n
