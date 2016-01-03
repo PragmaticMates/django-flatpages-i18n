@@ -18,7 +18,7 @@ setup(
         'flatpages_i18n.migrations'
     ],
     include_package_data=True,
-    install_requires=('South', 'django_modeltranslation', 'django', 'django_mptt'),
+    install_requires=('django_modeltranslation', 'django', 'django_mptt'),
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.5',
