@@ -54,6 +54,7 @@ class FlatpageForm(forms.ModelForm):
 
     class Meta:
         model = FlatPage_i18n
+        exclude = ()
 
 
 
@@ -77,6 +78,7 @@ class MenuItemForm(forms.ModelForm):
 
     class Meta:
         model = MenuItem
+        exclude = ()
 
 
 class ImageForm(forms.Form):
