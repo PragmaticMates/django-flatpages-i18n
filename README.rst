@@ -115,7 +115,7 @@ FLATPAGES_REDACTOR_CSS
 Authors
 -------
 
-Library is by `Lukas Vinclav` and `Erik Telepovsky` from `Pragmatic Mates`_. See `our other libraries`_.
+Library is by `Erik Telepovsky` from `Pragmatic Mates`_. See `our other libraries`_.
 
 .. _Pragmatic Mates: http://www.pragmaticmates.com/
 .. _our other libraries: https://github.com/PragmaticMates
