@@ -7,11 +7,10 @@ Translatable version of django.contrib.flatpages with basic menu support.
 Requirements
 ------------
 - Django
-- South
 - django_modeltranslation
 - django_mptt
 
-Tested on Django 1.4.5.
+Tested with Django 1.8.
 
 
 Installation
@@ -19,7 +18,7 @@ Installation
 
 1. Install python library using pip: ``pip install django-flatpages-i18n``
 
-2. Add ``south``, ``mptt``, ``modeltranslation`` and ``flatpages_i18n`` to ``INSTALLED_APPS`` in your Django settings file
+2. Add ``mptt``, ``modeltranslation`` and ``flatpages_i18n`` to ``INSTALLED_APPS`` in your Django settings file
 
 3. Add ``flatpages_i18n.middleware.FlatpageFallbackMiddleware`` to ``MIDDLEWARE_CLASSES`` in your Django settings file
 
@@ -33,7 +32,7 @@ Installation
         ('de', gettext('German')),
     )
 
-5. Sync and migrate your database
+5. Migrate your database
 
 6. Run ``sync_translation_fields`` and ``update_translation_fields`` commands (from ``modeltranslation`` app)
 
