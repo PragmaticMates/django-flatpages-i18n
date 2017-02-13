@@ -10,8 +10,8 @@ from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.decorators.http import require_POST
 
-from forms import ImageForm
-from models import FlatPage_i18n
+from flatpages_i18n.forms import ImageForm
+from flatpages_i18n.models import FlatPage_i18n
 
 
 DEFAULT_TEMPLATE = 'flatpages_i18n/default.html'
