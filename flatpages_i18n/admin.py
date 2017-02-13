@@ -6,9 +6,9 @@ from django.utils.translation import ugettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 from mptt.admin import MPTTModelAdmin
 
-from .forms import FlatpageForm, MenuItemForm
-from .models import FlatPage_i18n, MenuItem
-from .widgets import RedactorEditor
+from flatpages_i18n.forms import FlatpageForm, MenuItemForm
+from flatpages_i18n.models import FlatPage_i18n, MenuItem
+from flatpages_i18n.widgets import RedactorEditor
 
 
 class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):

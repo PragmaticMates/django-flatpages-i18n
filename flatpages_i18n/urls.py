@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
-from views import redactor_upload
-from forms import FileForm, ImageForm
+from flatpages_i18n.views import redactor_upload
+from flatpages_i18n.forms import FileForm, ImageForm
 
 urlpatterns = patterns('flatpages_i18n.views', (r'^(?P<url>.*)$', 'flatpage'),)
 
