@@ -1,11 +1,13 @@
+from builtins import str as text
 from django.contrib.sites.models import Site
 from django.db import models
+from django.utils.six import python_2_unicode_compatible
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-
 from mptt.models import MPTTModel, TreeForeignKey
 
 
+@python_2_unicode_compatible
 class FlatPage_i18n(MPTTModel):
     WEIGHT = [(i, i) for i in range(-10, 10)]
 
@@ -39,7 +41,7 @@ class FlatPage_i18n(MPTTModel):
         verbose_name_plural = _(u'flat pages')
         ordering = ('weight', 'created')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, **kwargs):
@@ -50,6 +52,7 @@ class FlatPage_i18n(MPTTModel):
         return self.url
 
 
+@python_2_unicode_compatible
 class MenuItem(MPTTModel):
     WEIGHT = [(i, i) for i in range(-10, 10)]
 
@@ -76,14 +79,14 @@ class MenuItem(MPTTModel):
         verbose_name_plural = _(u'menu items')
         ordering = ('weight', 'created')
 
-    def __unicode__(self):
-        if self.title and len(unicode(self.title).strip()) != 0:
+    def __str__(self):
+        if self.title and len(text(self.title).strip()) != 0:
             return self.title
 
         if self.flatpage:
-            return unicode(self.flatpage)
+            return text(self.flatpage)
 
-        return unicode(self.pk)
+        return text(self.pk)
 
     def save(self, **kwargs):
         self.modified = now()

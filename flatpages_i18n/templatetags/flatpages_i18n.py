@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from builtins import str as text
 from django import template
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import EMPTY_VALUES
 
-from ..models import FlatPage_i18n
+from flatpages_i18n.models import FlatPage_i18n, MenuItem
 
 
 register = template.Library()
@@ -141,13 +142,11 @@ def get_flatpages_i18n(parser, token):
 
 @register.inclusion_tag('flatpages_i18n/menu.html', takes_context=True)
 def get_menu(context, key=None):
-    from ..models import MenuItem
-
     menu = MenuItem.objects.all()
 
     if key not in EMPTY_VALUES:
         try:
-            if unicode(key).isdigit():
+            if text(key).isdigit():
                 menu = MenuItem.objects.get(pk=key).get_descendants()
             else:
                 menu = MenuItem.objects.get(machine_name=key).get_descendants()
@@ -161,11 +160,9 @@ def get_menu(context, key=None):
 
 @register.assignment_tag(takes_context=True)
 def get_flatpage_i18n(context, key=None):
-    from ..models import FlatPage_i18n
-
     if key not in EMPTY_VALUES:
         try:
-            if unicode(key).isdigit():
+            if text(key).isdigit():
                 flatpage = FlatPage_i18n.objects.get(pk=key)
             else:
                 flatpage = FlatPage_i18n.objects.get(machine_name=key)

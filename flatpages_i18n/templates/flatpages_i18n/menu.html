@@ -3,7 +3,7 @@
 
 <ul class="nav">
     {% recursetree nodes %}
-        <li {% if not node.is_leaf_node %}class="dropdown"{% endif %}>
+        <li class="nav-item{% if not node.is_leaf_node %} dropdown{% endif %}">
             <a href="{% if not node.has_custom_link %}/{{ LANGUAGE_CODE }}{% endif %}{{ node.get_link }}" {% if not node.is_leaf_node %}class="dropdown-toggle" data-toggle="dropdown"{% endif %}>
                 {{ node }}
 

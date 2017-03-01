@@ -1,3 +1,4 @@
+from builtins import str as text
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import TextField
@@ -42,7 +43,6 @@ class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
         super(TranslationAdmin, self).__init__(*args, **kwargs)
         self._patch_list_editable()
 
-
     def indented_title(self, obj):
         level = getattr(obj, obj._mptt_meta.level_attr)
 
@@ -50,7 +50,7 @@ class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
             return obj
 
         level_indicator = ''.join(['-' for i in range(level)])
-        return '%s %s' % (level_indicator, unicode(obj))
+        return u'%s %s' % (level_indicator, text(obj))
 
 admin.site.register(FlatPage_i18n, FlatPageAdmin)
 
@@ -70,6 +70,6 @@ class MenuItemAdmin(MPTTModelAdmin, TranslationAdmin):
             return obj
 
         level_indicator = ''.join(['-' for i in range(level)])
-        return '%s %s' % (level_indicator, unicode(obj))
+        return u'%s %s' % (level_indicator, text(obj))
 
 admin.site.register(MenuItem, MenuItemAdmin)
