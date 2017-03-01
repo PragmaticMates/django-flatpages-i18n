@@ -22,12 +22,10 @@ class FlatPage_i18n(MPTTModel):
     content = models.TextField(_(u'content'), blank=True)
     template_name = models.CharField(
         _(u'template name'), max_length=70, blank=True,
-        help_text=_(u"Example: 'flatpages_i18n/contact_page.html'. If this isn't \
-        provided, the system will use 'flatpages_i18n/default.html'."))
+        help_text=_(u"Example: 'flatpages_i18n/contact_page.html'. If this isn't provided, the system will use 'flatpages_i18n/default.html'."))
     registration_required = models.BooleanField(
         _(u'registration required'), default=False,
-        help_text=_(u"If this is checked, only logged-in users will be able \
-        to view the page."))
+        help_text=_(u"If this is checked, only logged-in users will be able to view the page."))
     weight = models.IntegerField(
         _(u'weight'), null=True, blank=True, default=0, choices=WEIGHT)
     created = models.DateTimeField(_(u'created'), default=now)
