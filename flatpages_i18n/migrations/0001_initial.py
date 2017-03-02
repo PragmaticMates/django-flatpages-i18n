@@ -1,9 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.core.management import call_command
 
 from django.db import models, migrations
 import mptt.fields
 import django.utils.timezone
+
+
+def sync_fields(apps, schema_editor):
+    call_command(
+        'sync_translation_fields',
+        verbosity=1,
+        interactive=False,
+        run_syncdb=True,
+    )
+    call_command(
+        'update_translation_fields',
+        verbosity=1,
+        interactive=False,
+        run_syncdb=True,
+    )
 
 
 class Migration(migrations.Migration):
@@ -63,4 +79,5 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'menu items',
             },
         ),
+        migrations.RunPython(sync_fields),
     ]
