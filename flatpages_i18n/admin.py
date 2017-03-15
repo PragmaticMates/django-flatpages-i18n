@@ -8,7 +8,7 @@ from modeltranslation.admin import TranslationAdmin
 from mptt.admin import MPTTModelAdmin
 
 from flatpages_i18n.forms import FlatpageForm, MenuItemForm
-from flatpages_i18n.models import FlatPage_i18n, MenuItem
+from flatpages_i18n.models import FlatPage_i18n, MenuItem, FlatBlock_i18n
 from flatpages_i18n.widgets import RedactorEditor
 
 
@@ -53,6 +53,30 @@ class FlatPageAdmin(MPTTModelAdmin, TranslationAdmin):
         return u'%s %s' % (level_indicator, text(obj))
 
 admin.site.register(FlatPage_i18n, FlatPageAdmin)
+
+
+class FlatBlockAdmin(TranslationAdmin):
+    list_display = ('get_title', 'machine_name')
+    readonly_fields = ('created', 'modified')
+
+    def get_title(self, obj):
+        return obj
+
+    class Media:
+        js = ('js/flatpages_i18n/jquery.js', )
+        css = {
+            'all': ('css/flatpages_i18n/admin.css', )
+        }
+
+    def __init__(self, *args, **kwargs):
+        if getattr(settings, 'FLATPAGES_EDITOR', None) == 'REDACTOR':
+            self.formfield_overrides = {
+                TextField: {'widget': RedactorEditor},
+            }
+        super(TranslationAdmin, self).__init__(*args, **kwargs)
+
+
+admin.site.register(FlatBlock_i18n, FlatBlockAdmin)
 
 
 class MenuItemAdmin(MPTTModelAdmin, TranslationAdmin):

@@ -51,6 +51,30 @@ class FlatPage_i18n(MPTTModel):
 
 
 @python_2_unicode_compatible
+class FlatBlock_i18n(models.Model):
+    machine_name = models.CharField(_(u'machine name'), max_length=100, db_index=True, unique=True)
+    title = models.CharField(_(u'title'), max_length=200, blank=True)
+    content = models.TextField(_(u'content'), blank=True)
+    template_name = models.CharField(_(u'template'), max_length=70, blank=True)
+    created = models.DateTimeField(_(u'created'), default=now)
+    modified = models.DateTimeField(_(u'modified'))
+
+    class Meta:
+        verbose_name = _(u'block')
+        verbose_name_plural = _(u'blocks')
+        ordering = ('title', )
+
+    def __str__(self):
+        if self.title:
+            return self.title
+        return self.machine_name
+
+    def save(self, **kwargs):
+        self.modified = now()
+        super(FlatBlock_i18n, self).save(*kwargs)
+
+
+@python_2_unicode_compatible
 class MenuItem(MPTTModel):
     WEIGHT = [(i, i) for i in range(-10, 10)]
 

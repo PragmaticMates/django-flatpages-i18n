@@ -3,10 +3,12 @@
 from builtins import str as text
 from django import template
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.core.validators import EMPTY_VALUES
+from django.template.loader import render_to_string
+from django.urls import reverse
 
-from flatpages_i18n.models import FlatPage_i18n, MenuItem
+from flatpages_i18n.models import FlatPage_i18n, MenuItem, FlatBlock_i18n
 
 
 register = template.Library()
@@ -171,3 +173,32 @@ def get_flatpage_i18n(context, key=None):
     else:
         flatpage = None
     return flatpage
+
+
+@register.simple_tag(takes_context=True)
+def render_flatblock(context, key):
+    try:
+        if text(key).isdigit():
+            block = FlatBlock_i18n.objects.get(pk=key)
+        else:
+            block = FlatBlock_i18n.objects.get(machine_name=key)
+    except ObjectDoesNotExist:
+        return ''
+
+    return render_to_string('flatpages_i18n/block.html', {
+        'title': block.title,
+        'content': block.content,
+    }, context['request'])
+
+
+@register.simple_tag(takes_context=True)
+def get_flatblock(context, key):
+    try:
+        if text(key).isdigit():
+            block = FlatBlock_i18n.objects.get(pk=key)
+        else:
+            block = FlatBlock_i18n.objects.get(machine_name=key)
+    except ObjectDoesNotExist:
+        return None
+
+    return block
