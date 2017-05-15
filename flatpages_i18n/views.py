@@ -87,6 +87,7 @@ def render_flatpage(request, f):
 
     c = RequestContext(request, {
         'flatpage': f,
+        'request': request
     })
     response = HttpResponse(t.render(c))
     try:

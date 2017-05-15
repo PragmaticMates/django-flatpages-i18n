@@ -2,7 +2,6 @@ from builtins import str as text
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.six import python_2_unicode_compatible
-from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -11,8 +10,8 @@ from mptt.models import MPTTModel, TreeForeignKey
 class FlatPage_i18n(MPTTModel):
     WEIGHT = [(i, i) for i in range(-10, 10)]
 
-    parent = TreeForeignKey(
-        'self', null=True, blank=True, related_name='children')
+    parent = TreeForeignKey('self', related_name='children',
+        null=True, blank=True)
     sites = models.ManyToManyField(Site)
     machine_name = models.CharField(_(u'machine name'), max_length=255,
         null=True, blank=True, default=None)
@@ -28,8 +27,8 @@ class FlatPage_i18n(MPTTModel):
         help_text=_(u"If this is checked, only logged-in users will be able to view the page."))
     weight = models.IntegerField(
         _(u'weight'), null=True, blank=True, default=0, choices=WEIGHT)
-    created = models.DateTimeField(_(u'created'), default=now)
-    modified = models.DateTimeField(_(u'modified'))
+    created = models.DateTimeField(_(u'created'), auto_now_add=True)
+    modified = models.DateTimeField(_(u'modified'), auto_now=True)
 
     class MPTTMeta:
         order_insertion_by = ['weight']
@@ -41,10 +40,6 @@ class FlatPage_i18n(MPTTModel):
 
     def __str__(self):
         return self.title
-
-    def save(self, **kwargs):
-        self.modified = now()
-        super(FlatPage_i18n, self).save(**kwargs)
 
     def get_absolute_url(self):
         return self.url
@@ -64,10 +59,10 @@ class MenuItem(MPTTModel):
     has_custom_link = models.BooleanField(_(u'has custom link'), default=False)
     title = models.CharField(_(u'title'), max_length=255,
         blank=True, null=True, default=None)
-    weight = models.IntegerField(
-        _(u'weight'), null=True, blank=True, default=0, choices=WEIGHT)
-    created = models.DateTimeField(_(u'created'), default=now)
-    modified = models.DateTimeField(_(u'modified'))
+    weight = models.IntegerField(_(u'weight'), choices=WEIGHT,
+        null=True, blank=True, default=0)
+    created = models.DateTimeField(_(u'created'), auto_now_add=True)
+    modified = models.DateTimeField(_(u'modified'), auto_now=True)
 
     class MPTTMeta:
         order_insertion_by = ['weight']
@@ -85,10 +80,6 @@ class MenuItem(MPTTModel):
             return text(self.flatpage)
 
         return text(self.pk)
-
-    def save(self, **kwargs):
-        self.modified = now()
-        super(MenuItem, self).save(**kwargs)
 
     def get_link(self):
         if self.flatpage:

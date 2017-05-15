@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-
 from builtins import str as text
 from django import template
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import EMPTY_VALUES
 
-from flatpages_i18n.models import FlatPage_i18n, MenuItem
+from ..models import FlatPage_i18n, MenuItem
 
 
 register = template.Library()
