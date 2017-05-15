@@ -19,3 +19,15 @@ History
 
 0.3.0 (2014-03-04)
 * get_flatpage_i18n template tag, use migration.
+
+0.4.0 (2014-05-20)
+* Django 1.8 support
+
+0.4.4 (2017-03-01)
+* Python 3 support
+
+0.5.0 (2017-03-02)
+* translation fields are synced automatically after initial migration
+
+0.6.0 (2017-05-15)
+* target of menu items

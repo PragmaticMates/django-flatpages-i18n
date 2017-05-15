@@ -48,6 +48,12 @@ class FlatPage_i18n(MPTTModel):
 @python_2_unicode_compatible
 class MenuItem(MPTTModel):
     WEIGHT = [(i, i) for i in range(-10, 10)]
+    TARGETS = (
+        ('_blank', _('Opens the linked document in a new window or tab')),
+        ('_self', _('Opens the linked document in the same frame as it was clicked')),
+        ('_parent', _('Opens the linked document in the parent frame')),
+        ('_top', _('Opens the linked document in the full body of the window')),
+    )
 
     machine_name = models.CharField(_(u'machine name'), max_length=255,
         null=True, blank=True, default=None)
@@ -55,8 +61,10 @@ class MenuItem(MPTTModel):
         null=True, blank=True)
     flatpage = models.ForeignKey(FlatPage_i18n, verbose_name=_('flatpage'),
         null=True, blank=True, default=None)
-    custom_link = models.CharField(_(u'custom link'), max_length=255, null=True, blank=True, default=None)
+    custom_link = models.CharField(_(u'custom link'), max_length=255,
+        null=True, blank=True, default=None)
     has_custom_link = models.BooleanField(_(u'has custom link'), default=False)
+    target = models.CharField(_(u'target'), max_length=7, choices=TARGETS, default='_self')
     title = models.CharField(_(u'title'), max_length=255,
         blank=True, null=True, default=None)
     weight = models.IntegerField(_(u'weight'), choices=WEIGHT,

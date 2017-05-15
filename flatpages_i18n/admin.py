@@ -59,7 +59,7 @@ class MenuItemAdmin(MPTTModelAdmin, TranslationAdmin):
     form = MenuItemForm
     mptt_level_indent = 0
 
-    fields = ['parent', 'title', 'flatpage', 'machine_name', 'has_custom_link', 'custom_link', ]
+    fields = ['parent', 'title', 'flatpage', 'machine_name', 'has_custom_link', 'custom_link', 'target']
     list_display = ('indented_title', 'machine_name', 'parent', 'weight')
     list_editable = ['parent', 'weight']
 
