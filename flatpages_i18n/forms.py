@@ -57,7 +57,6 @@ class FlatpageForm(forms.ModelForm):
         exclude = ()
 
 
-
 class MenuItemForm(forms.ModelForm):
     def clean_machine_name(self):
         machine_name = self.cleaned_data.get('machine_name', None)

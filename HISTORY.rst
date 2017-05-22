@@ -31,3 +31,7 @@ History
 
 0.6.0 (2017-05-15)
 * target of menu items
+
+0.7.0 (2017-05-22)
+* language code added to absolute path of FlatPage_i18n model
+* support for django-seo2 app
