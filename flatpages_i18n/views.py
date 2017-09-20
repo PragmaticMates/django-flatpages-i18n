@@ -14,7 +14,7 @@ from flatpages_i18n.forms import ImageForm
 from flatpages_i18n.models import FlatPage_i18n
 
 
-DEFAULT_TEMPLATE = 'flatpages_i18n/default.html'
+DEFAULT_TEMPLATE = getattr(settings, 'FLATPAGES_DEFAULT_TEMPLATE', 'flatpages_i18n/default.html')
 
 
 # This view is called from FlatpageFallbackMiddleware.process_response
@@ -30,8 +30,8 @@ def flatpage(request, url):
     Public interface to the flat page view.
 
     Models: `flatpages.flatpages`
-    Templates: Uses the template defined by the ``template_name`` field,
-        or `flatpages/default.html` if template_name is not defined.
+    Templates: Uses the template defined by the ``template_name`` field or settings.FLATPAGES_DEFAULT_TEMPLATE
+        or `flatpages/default.html`.
     Context:
         flatpage
             `flatpages.flatpages` object
