@@ -101,6 +101,9 @@ or by its machine_name::
 Settings
 --------
 
+FLATPAGES_DEFAULT_TEMPLATE
+    You may specify default template used for flatpages rendering. If not set, ``flatpages_i18n/default.html`` is used.
+
 FLATPAGES_EDITOR
     If you wish to use `Redactor`_ as WYSIWYG editor, set it to ``'REDACTOR'``. Default: ``None``.
 
