@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.files.storage import default_storage
 from django.http import Http404, HttpResponse, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404
-from django.template import loader, RequestContext
+from django.template import loader
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.views.decorators.http import require_POST
@@ -85,11 +85,10 @@ def render_flatpage(request, f):
     f.title = mark_safe(f.title)
     f.content = mark_safe(f.content)
 
-    c = RequestContext(request, {
-        'flatpage': f,
-        'request': request
-    })
-    response = HttpResponse(t.render(c))
+    response = HttpResponse(t.render({
+        'flatpage': f
+    }, request))
+
     try:
         from django.core.xheaders import populate_xheaders
         populate_xheaders(request, response, FlatPage_i18n, f.id)
