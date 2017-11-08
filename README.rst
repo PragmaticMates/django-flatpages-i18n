@@ -39,7 +39,7 @@ Installation
 7. If you want to use Redactor WYSIWYG editor (see settings below), you need to add ``'flatpages_i18n.urls'`` to your urls.py::
 
     if 'flatpages_i18n' in settings.INSTALLED_APPS:
-        urlpatterns += i18n_patterns('',
+        urlpatterns += i18n_patterns(
             url(r'^', include('flatpages_i18n.urls')),
         )
 
