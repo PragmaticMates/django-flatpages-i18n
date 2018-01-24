@@ -38,3 +38,6 @@ History
 
 0.7.1 (2018-01-24)
 * support for Django 1.11
+
+0.7.2
+* support for languages with hyphens

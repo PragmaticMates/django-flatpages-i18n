@@ -42,12 +42,13 @@ def flatpage(request, url):
 
     language = request.LANGUAGE_CODE
     language_prefix = '/%s' % language
+    language_db_field = language.replace('-', '_')
 
     if url.startswith(language_prefix):
         url = url[len(language_prefix):]
 
     kwargs = {
-        '{0}__{1}'.format('url_%s' % language, 'exact'): url,
+        '{0}__{1}'.format('url_%s' % language_db_field, 'exact'): url,
         '{0}__{1}'.format('sites__id', 'exact'): settings.SITE_ID
     }
 
