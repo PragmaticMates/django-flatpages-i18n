@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='django-flatpages-i18n',
-    version='0.7.0',
+    version='0.7.1',
     description='Translatable flatpages',
     long_description=open('README.rst').read(),
     author='Pragmatic Mates',

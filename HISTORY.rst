@@ -35,3 +35,6 @@ History
 0.7.0 (2017-05-22)
 * language code added to absolute path of FlatPage_i18n model
 * support for django-seo2 app
+
+0.7.1 (2018-01-24)
+* support for Django 1.11
