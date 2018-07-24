@@ -157,7 +157,7 @@ def get_menu(context, key=None):
     }
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_flatpage_i18n(context, key=None):
     if key not in EMPTY_VALUES:
         try:
