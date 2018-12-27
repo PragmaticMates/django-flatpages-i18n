@@ -12,13 +12,10 @@ def sync_fields(apps, schema_editor):
         'sync_translation_fields',
         verbosity=1,
         interactive=False,
-        run_syncdb=True,
     )
     call_command(
         'update_translation_fields',
         verbosity=1,
-        interactive=False,
-        run_syncdb=True,
     )
 
 
