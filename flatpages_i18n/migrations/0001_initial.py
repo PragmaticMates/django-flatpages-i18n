@@ -12,13 +12,10 @@ def sync_fields(apps, schema_editor):
         'sync_translation_fields',
         verbosity=1,
         interactive=False,
-        run_syncdb=True,
     )
     call_command(
         'update_translation_fields',
         verbosity=1,
-        interactive=False,
-        run_syncdb=True,
     )
 
 
@@ -46,7 +43,7 @@ class Migration(migrations.Migration):
                 ('rght', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('tree_id', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('level', models.PositiveIntegerField(editable=False, db_index=True)),
-                ('parent', mptt.fields.TreeForeignKey(related_name='children', blank=True, to='flatpages_i18n.FlatPage_i18n', null=True)),
+                ('parent', mptt.fields.TreeForeignKey(related_name='children', blank=True, to='flatpages_i18n.FlatPage_i18n', null=True, on_delete=django.db.models.deletion.SET_NULL)),
                 ('sites', models.ManyToManyField(to='sites.Site')),
             ],
             options={
@@ -70,8 +67,8 @@ class Migration(migrations.Migration):
                 ('rght', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('tree_id', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('level', models.PositiveIntegerField(editable=False, db_index=True)),
-                ('flatpage', models.ForeignKey(default=None, blank=True, to='flatpages_i18n.FlatPage_i18n', null=True, verbose_name='flatpage')),
-                ('parent', mptt.fields.TreeForeignKey(related_name='children', blank=True, to='flatpages_i18n.MenuItem', null=True)),
+                ('flatpage', models.ForeignKey(default=None, blank=True, to='flatpages_i18n.FlatPage_i18n', null=True, verbose_name='flatpage', on_delete=django.db.models.deletion.SET_NULL)),
+                ('parent', mptt.fields.TreeForeignKey(related_name='children', blank=True, to='flatpages_i18n.MenuItem', null=True, on_delete=django.db.models.deletion.SET_NULL)),
             ],
             options={
                 'ordering': ('weight', 'created'),

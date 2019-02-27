@@ -2,8 +2,11 @@ import json
 
 from django.forms import widgets
 from django.utils.safestring import mark_safe
-from django.core.urlresolvers import reverse
 from django.conf import settings
+try:
+    from django.urls import reverse
+except ImportError:
+    from django.core.urlresolvers import reverse
 
 
 REDACTOR_OPTIONS = getattr(settings, 'FLATPAGES_REDACTOR_OPTIONS', {})
