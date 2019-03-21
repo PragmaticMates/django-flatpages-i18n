@@ -73,3 +73,10 @@ class MenuItemAdmin(MPTTModelAdmin, TranslationAdmin):
         return u'%s %s' % (level_indicator, text(obj))
 
 admin.site.register(MenuItem, MenuItemAdmin)
+
+
+try:
+    from django.contrib.flatpages.models import FlatPage
+    admin.site.unregister(FlatPage)
+except ImportError:
+    pass
