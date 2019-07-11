@@ -1,6 +1,7 @@
 from builtins import str as text
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.admin.sites import NotRegistered
 from django.db.models import TextField
 from django.utils.translation import ugettext_lazy as _
 
@@ -78,5 +79,5 @@ admin.site.register(MenuItem, MenuItemAdmin)
 try:
     from django.contrib.flatpages.models import FlatPage
     admin.site.unregister(FlatPage)
-except ImportError:
+except (ImportError, NotRegistered) as e:
     pass
