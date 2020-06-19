@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from martor.models import MartorField
 from modeltrans.fields import TranslationField
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -33,7 +34,7 @@ class FlatPage_i18n(SlugMixin, models.Model):
     title = models.CharField(_('title'), max_length=200)
     slug = models.SlugField(unique=True, max_length=SlugMixin.MAX_SLUG_LENGTH, blank=True, default='')
     machine_name = models.SlugField(_('machine name'), max_length=30, blank=True, help_text=_('unique'))
-    content = models.TextField(_('content'), blank=True)
+    content = MartorField(_('content'), blank=True)
     template_name = models.CharField(
         _('template name'), max_length=70, blank=True,
         help_text=_(u"Example: 'flatpages_i18n/contact_page.html'. If this isn't provided, the system will use 'flatpages_i18n/default.html'."))
@@ -84,7 +85,7 @@ class MenuItem(MPTTModel):
         null=True, blank=True, default=None, on_delete=models.SET_NULL)
     custom_link = models.CharField(_('custom link'), max_length=200, blank=True)
     target = models.CharField(_('target'), max_length=7, choices=TARGETS, default='_self')
-    title = models.CharField(_('title'), max_length=255, blank=True)
+    title = models.CharField(_('title'), max_length=100, blank=True)
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
     i18n = TranslationField(fields=('title', 'custom_link'))
