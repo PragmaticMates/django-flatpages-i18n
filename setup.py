@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='django-flatpages-i18n',
-    version='0.7.1',
+    version='1.0.0',
     description='Translatable flatpages',
     long_description=open('README.rst').read(),
     author='Pragmatic Mates',
@@ -18,18 +18,15 @@ setup(
         'flatpages_i18n.migrations'
     ],
     include_package_data=True,
-    install_requires=('future', 'django_modeltranslation', 'django', 'django_mptt'),
+    install_requires=('django_modeltrans', 'django', 'django_mptt'),
     classifiers=[
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.5',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.7',
         'Operating System :: OS Independent',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'Framework :: Django',
         'License :: OSI Approved :: BSD License'],
     license='BSD License',
-    keywords = "django flatpages translation i18n wysiwyg",
+    keywords="django flatpages translation i18n",
 )

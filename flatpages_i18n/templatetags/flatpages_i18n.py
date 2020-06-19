@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-from builtins import str as text
 from django import template
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import EMPTY_VALUES
 
-from ..models import FlatPage_i18n, MenuItem
-
+from ..models import FlatPage_i18n, MenuItem, Menu
 
 register = template.Library()
 
@@ -139,40 +136,35 @@ def get_flatpages_i18n(parser, token):
         raise template.TemplateSyntaxError(syntax_message)
 
 
-@register.inclusion_tag('flatpages_i18n/menu.html', takes_context=True)
-def get_menu(context, key=None):
-    menu = MenuItem.objects.all()
-
+@register.simple_tag(takes_context=True)
+def get_menu_i18n(context, key=None):
     if key not in EMPTY_VALUES:
         try:
-            if text(key).isdigit():
-                menu = MenuItem.objects.get(pk=key).get_descendants()
-            else:
-                menu = MenuItem.objects.get(machine_name=key).get_descendants()
+            attr = 'pk' if str(key).isdigit() else 'machine_name'
+            menu = Menu.objects.get(**{attr: key})
+            items = menu.item_set
         except ObjectDoesNotExist:
-            menu = MenuItem.objects.none()
+            items = MenuItem.objects.none()
+    else:
+        items = MenuItem.objects.all()
 
+    return items.select_related('flatpage')
+
+
+@register.inclusion_tag('flatpages_i18n/menu.html', takes_context=True)
+def menu_i18n(context, key=None):
     return {
-        'nodes': menu
+        'nodes': get_menu_i18n(context, key)
     }
 
 
-try:
-    assignment_tag = register.assignment_tag
-except AttributeError:
-    assignment_tag = register.simple_tag
-
-
-@assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_flatpage_i18n(context, key=None):
     if key not in EMPTY_VALUES:
         try:
-            if text(key).isdigit():
-                flatpage = FlatPage_i18n.objects.get(pk=key)
-            else:
-                flatpage = FlatPage_i18n.objects.get(machine_name=key)
+            attr = 'pk' if str(key).isdigit() else 'machine_name'
+            return FlatPage_i18n.objects.get(**{attr: key})
         except ObjectDoesNotExist:
-            flatpage = None
-    else:
-        flatpage = None
-    return flatpage
+            return None
+
+    return None

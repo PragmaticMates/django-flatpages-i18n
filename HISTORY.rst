@@ -41,3 +41,14 @@ History
 
 0.7.2
 * support for languages with hyphens
+
+1.0.0 (2020-06-19)
+* Complete refactoring of whole package.
+* Dropped support for Python 2
+* django-modeltrans replaced django-modeltranslations
+* flatpage doesn't have parent relationship
+* dropped middleware, using urls instead
+* dropped machine name for menu items
+* dropped support for redactor editor
+* GIN indexes
+* WARNING: migrations are not compatible with versions < 1.0.0 !
