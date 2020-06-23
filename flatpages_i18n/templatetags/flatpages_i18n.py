@@ -136,8 +136,8 @@ def get_flatpages_i18n(parser, token):
         raise template.TemplateSyntaxError(syntax_message)
 
 
-@register.simple_tag(takes_context=True)
-def get_menu_i18n(context, key=None):
+@register.simple_tag()
+def get_menu_i18n(key=None):
     if key not in EMPTY_VALUES:
         try:
             attr = 'pk' if str(key).isdigit() else 'machine_name'
@@ -151,15 +151,15 @@ def get_menu_i18n(context, key=None):
     return items.select_related('flatpage')
 
 
-@register.inclusion_tag('flatpages_i18n/menu.html', takes_context=True)
-def menu_i18n(context, key=None):
+@register.inclusion_tag('flatpages_i18n/menu.html')
+def menu_i18n(key=None):
     return {
-        'nodes': get_menu_i18n(context, key)
+        'nodes': get_menu_i18n(key)
     }
 
 
-@register.simple_tag(takes_context=True)
-def get_flatpage_i18n(context, key=None):
+@register.simple_tag()
+def get_flatpage_i18n(key=None):
     if key not in EMPTY_VALUES:
         try:
             attr = 'pk' if str(key).isdigit() else 'machine_name'
