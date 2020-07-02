@@ -3,29 +3,11 @@ from django.contrib.sites.models import Site
 from django.core.validators import EMPTY_VALUES
 from django.db import models
 from django.urls import reverse
-from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from martor.models import MartorField
 from modeltrans.fields import TranslationField
 from mptt.models import MPTTModel, TreeForeignKey
-
-
-class SlugMixin(object):  # TODO: move to django-pragmatic
-    MAX_SLUG_LENGTH = 150
-    FORCE_SLUG_REGENERATION = True
-
-    def save(self, **kwargs):
-        if self.slug in EMPTY_VALUES or self.FORCE_SLUG_REGENERATION:
-            slug = slugify(self.title)
-            self.slug = slug
-            index = 1
-
-            # Ensure uniqueness
-            while self.__class__.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
-                self.slug = f'{slug}-{index}'
-                index += 1
-
-        return super().save(**kwargs)
+from pragmatic.mixins import SlugMixin
 
 
 class FlatPage_i18n(SlugMixin, models.Model):
