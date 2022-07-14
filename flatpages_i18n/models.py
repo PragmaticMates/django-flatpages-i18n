@@ -1,5 +1,6 @@
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
 from django.core.validators import EMPTY_VALUES
 from django.db import models
 from django.urls import reverse
@@ -33,13 +34,30 @@ class FlatPage_i18n(SlugMixin, models.Model):
         verbose_name_plural = _('flat pages')
         ordering = ('title',)
         indexes = [GinIndex(fields=["i18n"]), ]
-        # TODO: unique machine_name (can be empty)
+        constraints = [
+            models.UniqueConstraint(
+                fields=['machine_name'],
+                condition=~models.Q(machine_name=''),
+                name='unique_machine_name'
+            )
+        ]
 
     def __str__(self):
         return self.title_i18n
 
     def get_absolute_url(self):
         return reverse('flatpages_i18n:detail', args=(self.slug_i18n,))
+
+    def clean(self):
+        if self.slug not in EMPTY_VALUES:
+            if self.__class__.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
+                raise ValidationError(_("Slug %s is not unique") % self.slug)
+
+        if self.machine_name not in EMPTY_VALUES:
+            if self.__class__.objects.filter(machine_name=self.machine_name).exclude(pk=self.pk).exists():
+                raise ValidationError(_("Machine name %s is not unique") % self.machine_name)
+
+        return super().clean()
 
 
 class Menu(models.Model):

@@ -9,6 +9,7 @@ Requirements
 - Django
 - django_modeltrans
 - django_mptt
+- django-pragmatic
 
 Tested with Django 1.8.
 
