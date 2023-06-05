@@ -4,11 +4,17 @@ from django.core.exceptions import ValidationError
 from django.core.validators import EMPTY_VALUES
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
 from martor.models import MartorField
 from modeltrans.fields import TranslationField
 from mptt.models import MPTTModel, TreeForeignKey
 from pragmatic.mixins import SlugMixin
+
+try:
+    # older Django
+    from django.utils.translation import ugettext_lazy as _
+except ImportError:
+    # Django >= 3
+    from django.utils.translation import gettext_lazy as _
 
 
 class FlatPage_i18n(SlugMixin, models.Model):
