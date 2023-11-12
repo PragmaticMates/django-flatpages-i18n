@@ -9,12 +9,7 @@ from modeltrans.fields import TranslationField
 from mptt.models import MPTTModel, TreeForeignKey
 from pragmatic.mixins import SlugMixin
 
-try:
-    # older Django
-    from django.utils.translation import ugettext_lazy as _
-except ImportError:
-    # Django >= 3
-    from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 class FlatPage_i18n(SlugMixin, models.Model):

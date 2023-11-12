@@ -1,15 +1,10 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
+
 from modeltrans.admin import ActiveLanguageMixin
 from mptt.admin import DraggableMPTTAdmin
 
 from flatpages_i18n.models import FlatPage_i18n, MenuItem, Menu
-
-try:
-    # older Django
-    from django.utils.translation import ugettext_lazy as _
-except ImportError:
-    # Django >= 3
-    from django.utils.translation import gettext_lazy as _
 
 
 @admin.register(FlatPage_i18n)
