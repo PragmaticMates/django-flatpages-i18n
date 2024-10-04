@@ -27,7 +27,9 @@ def markdown_to_html(apps, schema_editor):
 def _migrate_content(flatpage, attr):
     content_martor = getattr(flatpage, attr, '')
     content_html = safe_markdown(content_martor) if content_martor else content_martor
-    setattr(flatpage, attr, content_html)
+
+    if content_html is not None:
+        setattr(flatpage, attr, content_html)
 
 
 class Migration(migrations.Migration):
