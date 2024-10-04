@@ -8,6 +8,7 @@ from martor.models import MartorField
 from modeltrans.fields import TranslationField
 from mptt.models import MPTTModel, TreeForeignKey
 from pragmatic.mixins import SlugMixin
+from tinymce.models import HTMLField
 
 from django.utils.translation import gettext_lazy as _
 
@@ -18,7 +19,7 @@ class FlatPage_i18n(SlugMixin, models.Model):
     title = models.CharField(_('title'), max_length=200)
     slug = models.SlugField(unique=True, max_length=SlugMixin.MAX_SLUG_LENGTH, blank=True, default='')
     machine_name = models.SlugField(_('machine name'), max_length=30, blank=True, help_text=_('unique'))
-    content = MartorField(_('content'), blank=True)
+    content = HTMLField(_('content'), blank=True)
     template_name = models.CharField(
         _('template name'), max_length=70, blank=True,
         help_text=_(u"Example: 'flatpages_i18n/contact_page.html'. If this isn't provided, the system will use 'flatpages_i18n/default.html'."))

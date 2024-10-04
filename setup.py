@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='django-flatpages-i18n',
-    version='1.1.1',
+    version='2.0.0',
     description='Translatable flatpages',
     long_description=open('README.rst').read(),
     author='Pragmatic Mates',
@@ -18,7 +18,7 @@ setup(
         'flatpages_i18n.migrations'
     ],
     include_package_data=True,
-    install_requires=('django', 'django_modeltrans', 'django_mptt', 'martor', 'django-pragmatic'),
+    install_requires=('django', 'django_modeltrans', 'django_mptt', 'markdown', 'martor', 'django-tinymce', 'django-pragmatic'),
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.7',
